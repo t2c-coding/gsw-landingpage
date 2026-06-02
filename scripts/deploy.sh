@@ -34,15 +34,16 @@ export PUBLIC_API_URL="${API_URL}"
 
 if [ "$VERIFY_ONLY" = false ]; then
   if [ "$SKIP_BUILD" = false ]; then
-    log "Installing dependencies…"
-    (cd apps/web && npm install)
-    (cd services/api && npm install)
+    if ! command -v docker >/dev/null 2>&1; then
+      log "docker is required on the host (npm is not)"
+      exit 1
+    fi
 
     log "Building web (PUBLIC_API_URL=$PUBLIC_API_URL)…"
-    (cd apps/web && npm run build)
+    build_web_dist "$ROOT" "$PUBLIC_API_URL"
 
     log "Building API image…"
-    docker compose -f docker/docker-compose.yml build
+    docker compose -f docker/docker-compose.yml build api
   fi
 
   log "Starting stack (api + caddy)…"

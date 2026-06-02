@@ -77,7 +77,7 @@ Uses `docker/docker-compose.yml` (Caddy TLS on 80/443 + `DOMAIN` in `.env`; API 
 
 ## Production deploy
 
-1. Provision Ubuntu VM (1 vCPU, 1GB RAM min), install Docker.
+1. Provision Ubuntu VM (1 vCPU, 1GB RAM min), install **Docker** (Node/npm on the host are not required).
 2. Point DNS `DOMAIN` → VM; open ports 80, 443.
 3. Create Supabase project; run `001_leads.sql`.
 4. Copy `.env` on VM from `.env.example` (all keys filled).

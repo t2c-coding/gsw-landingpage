@@ -19,3 +19,15 @@ retry_curl() {
 log() {
   echo "[deploy] $*"
 }
+
+# Build Astro static site without host Node/npm (dist → apps/web/dist).
+build_web_dist() {
+  local root="$1"
+  local public_api_url="$2"
+  docker run --rm \
+    -v "${root}/apps/web:/app" \
+    -w /app \
+    -e "PUBLIC_API_URL=${public_api_url}" \
+    node:20-alpine \
+    sh -c "npm ci && npm run build"
+}
