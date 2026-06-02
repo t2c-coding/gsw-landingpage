@@ -6,19 +6,10 @@ export const campaign = {
         "Domain-grounded geologic reasoning with regulatory and map context - not generic chat.",
     },
     hero: {
-      title: "Expert AI agents for geoscience - reasoning you can map",
+      title: "Expert AI agent that understands geoscience",
       subtitle:
         "Geologic interpretation, regulatory boundaries, and geographic context in one explainable workflow.",
       cta: "Sign up for an exploratory call",
-    },
-    value: {
-      title: "Geoscience expertise, not generic chat",
-      bullets: [
-        "Geologic reasoning grounded in basin data, formations, and well history",
-        "Regulatory and licence-block context built into every answer",
-        "Geographic framing - find what matters and show it on a map",
-        "Explainable citations you can trust in technical workflows",
-      ],
     },
     proof: {
       sectionTitle: "General models aren't built for expertise work",
