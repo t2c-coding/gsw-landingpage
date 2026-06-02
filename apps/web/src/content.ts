@@ -36,15 +36,6 @@ export const campaign = {
         "Intelligence woven into existing tools at the edge of the workflow",
       ],
     },
-    caseStudy: {
-      title: "Exploration geology - new insights from forgotten data",
-      metrics: [
-        "Research time cut from days to minutes",
-        "Decades of relinquishment reports queryable in natural language",
-        "Complete source citations for trusted answers",
-      ],
-      body: "World's first publicly available LLM solution for exploration geology - seismic data, well logs, and interpretations searchable with map-ready context.",
-    },
     logos: {
       title: "Trusted by",
       items: [
