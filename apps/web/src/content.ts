@@ -36,13 +36,6 @@ export const campaign = {
         "Intelligence woven into existing tools at the edge of the workflow",
       ],
     },
-    logos: {
-      title: "Trusted by",
-      items: [
-        { name: "GeoScienceWorld", src: "/brand/clients/geoscienceworld.png" },
-        { name: "Norwegian Offshore Directorate", src: "/brand/clients/nod.png" },
-      ],
-    },
     cta: {
       paragraph:
         "If you'd like to be able to know how to accurately handle regulatory, geographical, and complex geological context in order to find relevant information and show it on a map, then sign up for an exploratory call with us.",
