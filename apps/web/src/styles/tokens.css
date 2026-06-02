@@ -5,12 +5,16 @@
   --fabriq-purple-600: #5919c1;
   --fabriq-lavender-100: #e2dbf7;
   --fabriq-lavender-200: #a994e8;
+  --fabriq-magenta: #ed1566;
+  --fabriq-yellow: #fae34d;
   --fabriq-white: #ffffff;
   --fabriq-grey: #7e7973;
+  --fabriq-surface-muted: #f8f6fc;
   /* fabriqai.com: Poppins (headings/UI) + Wix Madefor Text (body) */
   --font-heading: "Poppins", "poppins-semibold", Helvetica, Arial, sans-serif;
   --font-body: "Wix Madefor Text", "Madefor", "madefor-text", Helvetica Neue, Helvetica,
     Arial, sans-serif;
   --radius: 12px;
   --shadow: 0 4px 24px rgba(32, 18, 64, 0.08);
+  --shadow-card: 0 8px 32px rgba(32, 18, 64, 0.1);
 }

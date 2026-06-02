@@ -25,9 +25,12 @@ Source: https://www.fabriqai.com/ — Wix theme, 2026-06-02.
 
 | File | Source |
 |------|--------|
-| `apps/web/public/brand/fabriq-grafikk.png` | Wix `Fabriq-grafikk-1-mask-lr.png` |
+| `apps/web/public/favicon.svg` | Wix `03f1b4_19870169a5ca418db25fb2c2cfd9c3fc.svg` (same as fabriqai.com) |
+| `apps/web/public/brand/fabriq-grafikk.png` | Wix `Fabriq-grafikk-1-mask-lr.png` full artwork (800×704, resized from 1850×1629) |
 | `apps/web/public/brand/clients/geoscienceworld.png` | GeoScienceWorld logo |
 | `apps/web/public/brand/clients/nod.png` | Norwegian Offshore Directorate |
+
+**Wordmark:** Wix SVG logos are hotlink-protected; the header uses a Poppins **Fabriq** text mark in `#201240`.
 
 ## Pages to ignore
 

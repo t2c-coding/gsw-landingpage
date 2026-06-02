@@ -1,7 +1,7 @@
 export const campaign = {
   geoscience: {
     seo: {
-      title: "Fabriq | Expert AI agents for geoscience",
+      title: "Fabriq | explainable ai",
       description:
         "Domain-grounded geologic reasoning with regulatory and map context - not generic chat.",
     },
@@ -30,9 +30,10 @@ export const campaign = {
     why: {
       title: "Why Fabriq",
       bullets: [
+        "Team of AI experts with experience in geoscience",
         "Trusted Intelligence; AI agents with full provenance",
         "Proven technology at scale",
-        "Team of AI experts with experience in geoscience",
+        "Fully managed AI products for your business",
       ],
     },
     cta: {

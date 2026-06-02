@@ -6,15 +6,18 @@ const year = new Date().getFullYear();
 
 <footer class="footer">
   <div class="container footer__inner">
-    <p>© {year} {footer}</p>
+    <p class="footer__credit">
+      © {year} <span class="footer__woven">{footer}</span>
+    </p>
     <a href="/privacy">Privacy</a>
   </div>
 </footer>
 
 <style>
   .footer {
-    padding: 2rem 0;
-    border-top: 1px solid var(--fabriq-lavender-100);
+    padding: 2.5rem 0;
+    background: var(--fabriq-white);
+    border-top: 1px solid var(--fabriq-lavender-200);
     color: var(--fabriq-grey);
     font-size: 0.9rem;
   }
@@ -24,5 +27,18 @@ const year = new Date().getFullYear();
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+  }
+  .footer__woven {
+    color: var(--fabriq-purple-900);
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+  .footer a {
+    color: var(--fabriq-purple-700);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer a:hover {
+    color: var(--fabriq-purple-500);
   }
 </style>

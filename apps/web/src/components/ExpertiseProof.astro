@@ -3,7 +3,7 @@ import { campaign } from "../content";
 const { proof } = campaign.geoscience;
 ---
 
-<section class="section proof" id="proof">
+<section class="section section--lavender proof" id="proof">
   <div class="container">
     <h2>{proof.sectionTitle}</h2>
     <p class="proof__prompt-label">Try asking:</p>
@@ -23,6 +23,9 @@ const { proof } = campaign.geoscience;
 </section>
 
 <style>
+  .proof h2 {
+    margin-bottom: 0.5rem;
+  }
   .proof__prompt-label {
     font-size: 0.9rem;
     color: var(--fabriq-grey);
@@ -32,9 +35,10 @@ const { proof } = campaign.geoscience;
     font-family: var(--font-heading);
     font-size: 1.25rem;
     font-weight: 600;
-    background: var(--fabriq-lavender-100);
+    background: var(--fabriq-white);
     padding: 1rem 1.25rem;
     border-radius: var(--radius);
+    box-shadow: var(--shadow);
     margin: 0 0 2rem;
   }
   .proof__story {
@@ -48,7 +52,8 @@ const { proof } = campaign.geoscience;
     margin: 0 0 1.25rem;
     padding: 1.25rem 1.5rem;
     border-left: 4px solid var(--fabriq-purple-500);
-    background: #f8f6fc;
+    background: var(--fabriq-white);
+    box-shadow: var(--shadow);
     border-radius: 0 var(--radius) var(--radius) 0;
   }
   .proof__quote cite {
@@ -70,10 +75,11 @@ const { proof } = campaign.geoscience;
   .proof__fabriq-condensed {
     font-size: 1.05rem;
     font-weight: 500;
-    background: var(--fabriq-lavender-100);
+    background: var(--fabriq-white);
     padding: 1.25rem;
     border-radius: var(--radius);
     border: 1px solid var(--fabriq-lavender-200);
+    box-shadow: var(--shadow);
     margin: 0 0 1rem;
   }
   .proof__takeaway {

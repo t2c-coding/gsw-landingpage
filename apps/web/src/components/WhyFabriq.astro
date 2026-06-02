@@ -3,24 +3,43 @@ import { campaign } from "../content";
 const { why } = campaign.geoscience;
 ---
 
-<section class="section section--lavender">
+<section class="section why">
   <div class="container">
     <h2>{why.title}</h2>
-    <ul class="why-list">
+    <ul class="why-grid">
       {why.bullets.map((b) => (
-        <li>{b}</li>
+        <li class="why-card">{b}</li>
       ))}
     </ul>
   </div>
 </section>
 
 <style>
-  .why-list {
-    margin: 1.5rem 0 0;
-    padding-left: 1.25rem;
-    color: var(--fabriq-purple-700);
+  .why-grid {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
   }
-  .why-list li {
-    margin-bottom: 0.75rem;
+  @media (min-width: 640px) {
+    .why-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 960px) {
+    .why-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .why-card {
+    background: var(--fabriq-lavender-100);
+    padding: 1.5rem 1.25rem;
+    border-radius: var(--radius);
+    color: var(--fabriq-purple-700);
+    font-weight: 500;
+    line-height: 1.45;
+    box-shadow: var(--shadow);
   }
 </style>

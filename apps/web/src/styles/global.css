@@ -33,6 +33,11 @@ h1 {
   font-weight: 700;
 }
 
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--fabriq-purple-900);
+}
+
 input,
 textarea,
 select,
@@ -47,6 +52,11 @@ cite {
 
 a {
   color: var(--fabriq-purple-500);
+  transition: color 0.15s;
+}
+
+a:hover {
+  color: var(--fabriq-purple-600);
 }
 
 img {
@@ -60,11 +70,17 @@ img {
 }
 
 .section {
-  padding: 4rem 0;
+  padding: clamp(3.5rem, 8vw, 5.5rem) 0;
 }
 
 .section--lavender {
   background: var(--fabriq-lavender-100);
+}
+
+.card {
+  background: var(--fabriq-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
 }
 
 .btn {
@@ -84,6 +100,12 @@ img {
 
 .btn:hover {
   background: var(--fabriq-purple-500);
+  transform: translateY(-1px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--fabriq-purple-500);
+  outline-offset: 2px;
 }
 
 .btn:disabled {
