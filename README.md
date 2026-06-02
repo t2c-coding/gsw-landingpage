@@ -1,6 +1,6 @@
 # Fabriq Geoscience Landing Page
 
-Lead-generation landing page for Fabriq expert AI agents in geoscience. Static Astro site + Dockerized Hono API + Supabase + Resend.
+Lead-generation landing page for Fabriq expert AI agents in geoscience. Static Astro site + Dockerized Hono API + Supabase.
 
 ## Stack
 
@@ -14,7 +14,7 @@ Lead-generation landing page for Fabriq expert AI agents in geoscience. Static A
 ```bash
 pnpm install
 
-# 1. Copy env and fill Supabase + optional Resend
+# 1. Copy env and fill Supabase credentials
 cp .env.example .env
 
 # 2. Run migration in Supabase SQL Editor (see supabase/migrations/001_leads.sql)

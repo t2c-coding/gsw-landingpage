@@ -1,7 +1,6 @@
 import { Hono } from "hono";
 import { z } from "zod";
 import { supabase } from "../supabase.js";
-import { notifyNewLead } from "../email.js";
 
 const leadSchema = z.object({
   email: z.string().email(),
@@ -85,12 +84,6 @@ leadsRoutes.post("/v1/leads", async (c) => {
   if (error) {
     console.error("Supabase insert error:", error);
     return c.json({ error: "Failed to save lead" }, 500);
-  }
-
-  try {
-    await notifyNewLead(data);
-  } catch (e) {
-    console.error("Email notify error:", e);
   }
 
   return c.json({ ok: true, leadId: row.id }, 201);

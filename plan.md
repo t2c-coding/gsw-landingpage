@@ -17,7 +17,7 @@ todos:
     content: "Build landing sections + responsive layout + a11y pass"
     status: pending
   - id: "phase-3-api-docker"
-    content: "Docker API (Hono) + Supabase leads + Resend + POST /v1/leads"
+    content: "Docker API (Hono) + Supabase leads + POST /v1/leads"
     status: pending
   - id: "phase-3-web-form"
     content: "Astro lead form → API URL, CORS, env PUBLIC_API_URL, form UX"
@@ -223,7 +223,7 @@ proof: {
 ### Engineering
 
 - TypeScript throughout; strict mode on.
-- No secrets in repo; use `.env.example` for `SUPABASE_*`, `RESEND_API_KEY`, etc.
+- No secrets in repo; use `.env.example` for `SUPABASE_*`, etc.
 - API validates input server-side; rate-limit or honeypot on public form endpoint.
 - Store leads with timestamp + source UTM fields when present.
 - Log errors server-side; never expose stack traces to clients.
@@ -331,7 +331,6 @@ Analysis date: 2026-06-02. Source: homepage HTML/CSS + Wix theme variables on [f
 | Site | **Astro 5 SSG** (`apps/web`) | Fast pages; no server runtime on CDN/VM static host |
 | API | **Node 20 + Hono** (`services/api`) | Small Docker image, TypeScript, simple `POST /v1/leads` |
 | Database | **Supabase** (hosted Postgres, free tier) | **No DB container on VM** — smallest feasible machine |
-| Email alert | **Resend** (called from API container) | Sales notification on each lead |
 | Orchestration | **Docker Compose** on VM | **`api` + `caddy` only** (2 services) |
 | TLS | **Caddy** (recommended) or Nginx + Certbot | Automatic HTTPS on the VM |
 | Static deploy | **Same VM** (proxy serves Astro `dist/`) *or* CDN | See deployment topology below |
@@ -364,7 +363,6 @@ flowchart TB
 
   browser[Visitor] --> proxy
   api --> db
-  api --> resend[Resend]
 ```
 
 **Request flow:**
@@ -375,13 +373,10 @@ sequenceDiagram
   participant Proxy as Caddy_on_VM
   participant API as api_container
   participant Supabase
-  participant Resend
-
   User->>Proxy: POST /api/v1/leads
   Proxy->>API: forward JSON
   API->>API: validate honeypot rate limit CORS
   API->>Supabase: INSERT leads service_role
-  API->>Resend: notify sales
   API->>User: 201 JSON
 ```
 
@@ -391,7 +386,7 @@ sequenceDiagram
 |--------|-----------|
 | **No Postgres container** | Saves ~200–400MB RAM on VM; faster deploy; fewer moving parts on small instances |
 | **Supabase free tier** | Managed Postgres + table UI for sales to browse leads; no `pg_dump` cron on VM |
-| **API still on your VM** | Own the HTTP boundary, validation, rate limit, Resend — not a third-party form embed |
+| **API still on your VM** | Own the HTTP boundary, validation, rate limit — not a third-party form embed |
 | **Tradeoff** | Lead data in Supabase cloud (region selectable in project); API keys in VM `.env` only |
 
 ### Supabase setup
@@ -528,7 +523,7 @@ docker/
 - [ ] Docker Engine + Compose plugin installed
 - [ ] Firewall: 22 (SSH, IP-restricted), **80**, **443**
 - [ ] DNS `DOMAIN` → VM public IP
-- [ ] Copy `.env` from `.env.example` on VM (`DOMAIN`, `ACME_EMAIL`, DB, Resend, etc.)
+- [ ] Copy `.env` from `.env.example` on VM (`DOMAIN`, `ACME_EMAIL`, Supabase, etc.)
 
 **Ongoing deploys:** only `./scripts/deploy.sh` (no manual compose steps).
 
@@ -543,8 +538,6 @@ docker/
 
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY` (server only — never in `apps/web`)
-- `RESEND_API_KEY`
-- `LEADS_NOTIFY_EMAIL`
 - `WEB_ORIGIN=https://your-landing-domain.com` (CORS)
 - `NODE_ENV=production`
 
@@ -607,7 +600,6 @@ fabriq-landing-page/
 │       │   ├── index.ts      # Hono app, CORS, routes
 │       │   ├── routes/leads.ts
 │       │   ├── supabase.ts   # Server client service_role
-│       │   └── email.ts      # Resend
 ├── supabase/
 │   └── migrations/
 │       └── 001_leads.sql     # Run in Supabase project not on VM
@@ -651,7 +643,7 @@ fabriq-landing-page/
 - [ ] **Logos** — GeoScienceWorld, Norwegian Offshore Directorate + 2 others from corp. geology-adjacent clients
 - [ ] **CTA** — Lock primary paragraph + button “Sign up for an exploratory call” (verbatim per guidelines)
 - [ ] **FAQ** — 4–6 items: general vs expert models, data residency, map integration, exploratory call expectations
-- [ ] **Ops** — Notification email(s), data retention, consent copy
+- [ ] **Ops** — Data retention, consent copy; review leads in Supabase dashboard
 
 ### Phase 1 — Scaffold & foundation
 
@@ -684,9 +676,9 @@ fabriq-landing-page/
 - [ ] `Dockerfile` multi-stage build (Node 20 Alpine — slim image)
 - [ ] `supabase/migrations/001_leads.sql` applied to Supabase project
 - [ ] `POST /v1/leads` — validate, honeypot, rate limit, CORS
-- [ ] Supabase insert via service role; Resend notify on success
+- [ ] Supabase insert via service role
 - [ ] `GET /health` — includes Supabase connectivity check
-- [ ] Local smoke test: curl POST → row in Supabase Table Editor + email
+- [ ] Local smoke test: curl POST → row in Supabase Table Editor
 
 ### Phase 3b — Web form → API
 
@@ -735,12 +727,11 @@ fabriq-landing-page/
 
 1. Official vector logo source (Wix export vs internal Figma/brand kit)?
 2. Rights to reuse client logos on a new landing domain / ad campaigns?
-3. Resend: which domain/from-address for production emails?
-4. Production `DOMAIN` and `ACME_EMAIL` for Let's Encrypt?
-5. VM provider and region (Hetzner, DigitalOcean, AWS Lightsail, in-house)?
-6. Who operates backups and on-call for the VM?
-7. Analytics provider preference?
-8. GDPR/CCPA requirements for your markets?
+3. Production `DOMAIN` and `ACME_EMAIL` for Let's Encrypt?
+4. VM provider and region (Hetzner, DigitalOcean, AWS Lightsail, in-house)?
+5. Who operates backups and on-call for the VM?
+6. Analytics provider preference?
+7. GDPR/CCPA requirements for your markets?
 
 ---
 
