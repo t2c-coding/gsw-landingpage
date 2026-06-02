@@ -12,7 +12,7 @@ export const campaign = {
       cta: "Sign up for an exploratory call",
     },
     proof: {
-      sectionTitle: "General models aren't built for expertise work",
+      sectionTitle: "General AI isn't built for expert work",
       prompt: "What was the goal of Schweinsteiger?",
       narrativeLead:
         "You will most likely get a football-related answer from ChatGPT or Copilot…",
@@ -25,7 +25,7 @@ export const campaign = {
       fabriqCondensed:
         "The goal of the Schweinsteiger prospect (licence PL829) was a commercial hydrocarbon discovery in the Åsgard Fm, tested by well 6204/11-3 in September 2020 - the well was dry and the licence was relinquished.",
       takeaway:
-        "General LLMs optimize for broad priors. Domain-grounded agents use your licence blocks, wells, and basin context.",
+        "General LLMs optimize for broad priors. Domain-grounded agents use your geological plays, wells, and basin context.",
     },
     why: {
       title: "Why Fabriq",
