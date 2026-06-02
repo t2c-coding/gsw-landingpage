@@ -1,6 +1,7 @@
 # Full local stack — no host npm required.
 #   ./scripts/ensure-env.sh
 #   docker compose -f docker/docker-compose.local.yml up --build
+# API is not published on the host; browser calls /api via Caddy only.
 services:
   api:
     build:
@@ -12,16 +13,22 @@ services:
       - PORT=3022
       - NODE_ENV=development
       - WEB_ORIGIN=http://localhost:8080
-    expose:
-      - "3022"
+    networks:
+      - fabriq
 
   web:
     build:
       context: ../apps/web
       dockerfile: Dockerfile
       args:
-        PUBLIC_API_URL: http://localhost:8080/api
+        PUBLIC_API_URL: /api
     ports:
       - "8080:80"
     depends_on:
       - api
+    networks:
+      - fabriq
+
+networks:
+  fabriq:
+    driver: bridge

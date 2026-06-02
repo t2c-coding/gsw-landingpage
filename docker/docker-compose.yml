@@ -9,8 +9,9 @@ services:
     environment:
       - PORT=3000
       - NODE_ENV=production
-    expose:
-      - "3000"
+    networks:
+      - fabriq
+    # No host ports — reachable only as http://api:3000 from Caddy on fabriq network
 
   caddy:
     image: caddy:2-alpine
@@ -28,6 +29,12 @@ services:
       - ACME_EMAIL=${ACME_EMAIL}
     depends_on:
       - api
+    networks:
+      - fabriq
+
+networks:
+  fabriq:
+    driver: bridge
 
 volumes:
   caddy_data:

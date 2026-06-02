@@ -47,7 +47,7 @@ cd apps/web && npm run dev
 ```
 
 - Site: http://localhost:4321 (hot reload)
-- API: http://localhost:3022 (`/health`, `/v1/leads`)
+- API: http://localhost:3022 (`/health`, `/v1/leads`) — published for host Astro dev only
 
 ### Option B — Full stack in Docker (no host `npm` required)
 
@@ -60,8 +60,8 @@ docker compose -f docker/docker-compose.local.yml up --build
 
 Docker builds the Astro site (`npm ci` + `npm run build` inside the `web` image) and starts API + Caddy.
 
-- Site: http://localhost:8080
-- Health: http://localhost:8080/api/health
+- Site: http://localhost:8080 (Caddy — only public port)
+- API: internal only (`http://api:3022` from Caddy); health at http://localhost:8080/api/health
 
 Rebuild after code changes: `docker compose -f docker/docker-compose.local.yml up --build`
 
@@ -73,7 +73,7 @@ Stop: `docker compose -f docker/docker-compose.local.yml down`
 ./scripts/deploy.sh
 ```
 
-Uses `docker/docker-compose.yml` (Caddy TLS + `DOMAIN` in `.env`). Not for everyday local dev.
+Uses `docker/docker-compose.yml` (Caddy TLS on 80/443 + `DOMAIN` in `.env`; API not exposed on the host). Not for everyday local dev.
 
 ## Production deploy
 
