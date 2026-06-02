@@ -19,15 +19,61 @@ cp .env.example .env
 
 # 2. Run migration in Supabase SQL Editor (see supabase/migrations/001_leads.sql)
 
-# 3. API
-pnpm dev:api
-# or: docker compose -f docker/docker-compose.dev.yml up --build
+# 3. API (from repo root .env)
+cd services/api && npm install && npm run dev
 
-# 4. Web
-PUBLIC_API_URL=http://localhost:3000 pnpm dev:web
+# 4. Web (PUBLIC_API_URL in apps/web/.env → http://localhost:3022)
+cd apps/web && npm run dev
 ```
 
 Open http://localhost:4321
+
+## Docker (local)
+
+```bash
+./scripts/ensure-env.sh   # creates .env from .env.example if missing; checks Supabase keys
+```
+
+### Option A — API only (Astro dev server for the site)
+
+```bash
+docker compose -f docker/docker-compose.local-dev.yml up --build
+```
+
+In another terminal:
+
+```bash
+cd apps/web && npm run dev
+```
+
+- Site: http://localhost:4321 (hot reload)
+- API: http://localhost:3022 (`/health`, `/v1/leads`)
+
+### Option B — Full stack in Docker (no host `npm` required)
+
+From the repo root:
+
+```bash
+./scripts/ensure-env.sh
+docker compose -f docker/docker-compose.local.yml up --build
+```
+
+Docker builds the Astro site (`npm ci` + `npm run build` inside the `web` image) and starts API + Caddy.
+
+- Site: http://localhost:8080
+- Health: http://localhost:8080/api/health
+
+Rebuild after code changes: `docker compose -f docker/docker-compose.local.yml up --build`
+
+Stop: `docker compose -f docker/docker-compose.local.yml down`
+
+### Production-like stack (VM — needs real DNS + Let's Encrypt)
+
+```bash
+./scripts/deploy.sh
+```
+
+Uses `docker/docker-compose.yml` (Caddy TLS + `DOMAIN` in `.env`). Not for everyday local dev.
 
 ## Production deploy
 

@@ -1,3 +1,4 @@
+# API only — pair with `cd apps/web && npm run dev` (hot reload)
 services:
   api:
     build:

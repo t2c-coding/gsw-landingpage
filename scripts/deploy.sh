@@ -19,12 +19,11 @@ for arg in "$@"; do
   esac
 done
 
-if [ -f "$ROOT/.env" ]; then
-  set -a
-  # shellcheck disable=SC1091
-  source "$ROOT/.env"
-  set +a
-fi
+"$ROOT/scripts/ensure-env.sh"
+set -a
+# shellcheck disable=SC1091
+source "$ROOT/.env"
+set +a
 
 : "${DOMAIN:?Set DOMAIN in .env}"
 : "${ACME_EMAIL:?Set ACME_EMAIL in .env}"
