@@ -90,7 +90,29 @@ chmod +x scripts/deploy.sh scripts/export-leads.sh
 
 Exit code **0** = delivery verified (HTTPS, health, test lead, page markers).
 
-Flags: `--verify-only`, `--skip-build`, `--skip-lead-test`
+Flags: `--verify-only`, `--skip-build`, `--skip-lead-test`, `--skip-dns-check`
+
+### TLS / Cloudflare troubleshooting
+
+If Caddy logs show ACME **404** on `/.well-known/acme-challenge/` and an IP like `2606:4700:…`, **Let's Encrypt is hitting Cloudflare**, not your VM. Caddy on the server never receives the challenge.
+
+**Fix A — DNS only (simplest):** In Cloudflare, set the `DOMAIN` record to **DNS only** (grey cloud). Point A/AAAA to your VM. Wait a few minutes, then:
+
+```bash
+docker compose -f docker/docker-compose.yml restart caddy
+# or full redeploy
+./scripts/deploy.sh
+```
+
+**Fix B — Keep Cloudflare proxy:** Create an API token with **Zone → DNS → Edit** for the zone, add to `.env`:
+
+```bash
+CLOUDFLARE_API_TOKEN=your_token
+```
+
+Redeploy; `deploy.sh` switches to **DNS-01** ACME via `docker/Caddyfile.cloudflare`.
+
+**Cloudflare SSL mode** (when using proxy): set SSL/TLS to **Full (strict)** once the origin has a valid cert.
 
 ## Env vars
 

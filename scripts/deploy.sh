@@ -10,12 +10,14 @@ source "$ROOT/scripts/lib/deploy-common.sh"
 VERIFY_ONLY=false
 SKIP_BUILD=false
 SKIP_LEAD_TEST=false
+SKIP_DNS_CHECK=false
 
 for arg in "$@"; do
   case "$arg" in
     --verify-only) VERIFY_ONLY=true ;;
     --skip-build) SKIP_BUILD=true ;;
     --skip-lead-test) SKIP_LEAD_TEST=true ;;
+    --skip-dns-check) SKIP_DNS_CHECK=true ;;
   esac
 done
 
@@ -32,6 +34,16 @@ BASE_URL="https://${DOMAIN}"
 API_URL="${BASE_URL}/api"
 export PUBLIC_API_URL="${API_URL}"
 
+if [ -n "${CLOUDFLARE_API_TOKEN:-}" ]; then
+  export CADDYFILE="${ROOT}/docker/Caddyfile.cloudflare"
+  log "ACME: Cloudflare DNS-01 (orange-cloud proxy OK)"
+elif [ "$SKIP_DNS_CHECK" = false ]; then
+  export CADDYFILE="${ROOT}/docker/Caddyfile"
+  check_acme_dns "$DOMAIN"
+else
+  export CADDYFILE="${ROOT}/docker/Caddyfile"
+fi
+
 if [ "$VERIFY_ONLY" = false ]; then
   if [ "$SKIP_BUILD" = false ]; then
     if ! command -v docker >/dev/null 2>&1; then
@@ -42,12 +54,12 @@ if [ "$VERIFY_ONLY" = false ]; then
     log "Building web (PUBLIC_API_URL=$PUBLIC_API_URL)…"
     build_web_dist "$ROOT" "$PUBLIC_API_URL"
 
-    log "Building API image…"
-    docker compose -f docker/docker-compose.yml build api
+    log "Building API + Caddy images…"
+    docker compose -f docker/docker-compose.yml build
   fi
 
   log "Starting stack (api + caddy)…"
-  export DOMAIN ACME_EMAIL
+  export DOMAIN ACME_EMAIL CADDYFILE
   docker compose -f docker/docker-compose.yml --env-file .env up -d
 fi
 

@@ -14,19 +14,23 @@ services:
     # No host ports — reachable only as http://api:3000 from Caddy on fabriq network
 
   caddy:
-    image: caddy:2-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.caddy
+    image: fabriq-caddy:2
     restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ${CADDYFILE:-./Caddyfile}:/etc/caddy/Caddyfile:ro
       - ../apps/web/dist:/srv/www:ro
       - caddy_data:/data
       - caddy_config:/config
     environment:
       - DOMAIN=${DOMAIN}
       - ACME_EMAIL=${ACME_EMAIL}
+      - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN:-}
     depends_on:
       - api
     networks:
