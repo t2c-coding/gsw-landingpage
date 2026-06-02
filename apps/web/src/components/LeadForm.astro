@@ -7,7 +7,6 @@ const apiBase = import.meta.env.PUBLIC_API_URL ?? "http://localhost:3022";
 <section class="section" id="contact">
   <div class="container contact">
     <h2>{cta.formTitle}</h2>
-    <p class="contact__paragraph">{cta.paragraph}</p>
 
     <form class="form" id="lead-form" novalidate>
       <div class="hp" aria-hidden="true">
@@ -91,12 +90,6 @@ const apiBase = import.meta.env.PUBLIC_API_URL ?? "http://localhost:3022";
 </script>
 
 <style>
-  .contact__paragraph {
-    color: var(--fabriq-purple-700);
-    max-width: 42rem;
-    margin-bottom: 2rem;
-    font-size: 1.05rem;
-  }
   .form {
     max-width: 28rem;
     display: grid;

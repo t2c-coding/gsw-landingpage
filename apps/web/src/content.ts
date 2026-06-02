@@ -37,8 +37,6 @@ export const campaign = {
       ],
     },
     cta: {
-      paragraph:
-        "If you'd like to be able to know how to accurately handle regulatory, geographical, and complex geological context in order to find relevant information and show it on a map, then sign up for an exploratory call with us.",
       formTitle: "Book an exploratory call",
       button: "Sign up for an exploratory call",
     },
