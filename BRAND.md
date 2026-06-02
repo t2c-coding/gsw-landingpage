@@ -17,8 +17,9 @@ Source: https://www.fabriqai.com/ — Wix theme, 2026-06-02.
 
 ## Typography
 
-- **Headings:** Poppins (Google Fonts)
-- **Body:** DM Sans (Madefor stand-in)
+- **Headings / UI / buttons:** Poppins (400–700) — matches `poppins` / `poppins-semibold` on site
+- **Body:** Wix Madefor Text (400–700) — same as `wix-madefor-text-v2` / `madefor-text` on site
+- Loaded via Google Fonts in `BaseLayout.astro`
 
 ## Assets in repo
 

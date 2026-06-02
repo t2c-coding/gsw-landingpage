@@ -21,10 +21,28 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-family: var(--font-heading);
+  font-weight: 600;
   line-height: 1.2;
   margin: 0 0 0.75rem;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+}
+
+label,
+cite {
+  font-family: var(--font-body);
 }
 
 a {

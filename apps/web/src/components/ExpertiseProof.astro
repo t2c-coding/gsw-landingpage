@@ -17,10 +17,6 @@ const { proof } = campaign.geoscience;
       </blockquote>
       <p class="proof__bridge">{proof.bridge}</p>
       <p class="proof__fabriq-condensed">{proof.fabriqCondensed}</p>
-      <details class="proof__details">
-        <summary>Full Fabriq answer</summary>
-        <p>{proof.fabriqFull}</p>
-      </details>
     </div>
     <p class="proof__takeaway">{proof.takeaway}</p>
   </div>
@@ -79,15 +75,6 @@ const { proof } = campaign.geoscience;
     border-radius: var(--radius);
     border: 1px solid var(--fabriq-lavender-200);
     margin: 0 0 1rem;
-  }
-  .proof__details {
-    margin-bottom: 1.5rem;
-    color: var(--fabriq-purple-700);
-  }
-  .proof__details summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: var(--fabriq-purple-500);
   }
   .proof__takeaway {
     color: var(--fabriq-purple-700);

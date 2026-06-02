@@ -7,8 +7,10 @@
   --fabriq-lavender-200: #a994e8;
   --fabriq-white: #ffffff;
   --fabriq-grey: #7e7973;
-  --font-heading: "Poppins", system-ui, sans-serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
+  /* fabriqai.com: Poppins (headings/UI) + Wix Madefor Text (body) */
+  --font-heading: "Poppins", "poppins-semibold", Helvetica, Arial, sans-serif;
+  --font-body: "Wix Madefor Text", "Madefor", "madefor-text", Helvetica Neue, Helvetica,
+    Arial, sans-serif;
   --radius: 12px;
   --shadow: 0 4px 24px rgba(32, 18, 64, 0.08);
 }
