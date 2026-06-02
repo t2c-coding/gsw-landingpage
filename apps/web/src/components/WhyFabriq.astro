@@ -1,0 +1,26 @@
+---
+import { campaign } from "../content";
+const { why } = campaign.geoscience;
+---
+
+<section class="section section--lavender">
+  <div class="container">
+    <h2>{why.title}</h2>
+    <ul class="why-list">
+      {why.bullets.map((b) => (
+        <li>{b}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .why-list {
+    margin: 1.5rem 0 0;
+    padding-left: 1.25rem;
+    color: var(--fabriq-purple-700);
+  }
+  .why-list li {
+    margin-bottom: 0.75rem;
+  }
+</style>

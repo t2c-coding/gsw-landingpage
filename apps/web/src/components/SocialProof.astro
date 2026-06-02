@@ -1,0 +1,40 @@
+---
+import { campaign } from "../content";
+const { logos } = campaign.geoscience;
+---
+
+<section class="section section--lavender">
+  <div class="container">
+    <h2 class="logos-title">{logos.title}</h2>
+    <div class="logos">
+      {logos.items.map((item) => (
+        <img src={item.src} alt={item.name} height="40" loading="lazy" />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .logos-title {
+    text-align: center;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fabriq-grey);
+  }
+  .logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 1.5rem;
+  }
+  .logos img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(0.2);
+    opacity: 0.9;
+  }
+</style>

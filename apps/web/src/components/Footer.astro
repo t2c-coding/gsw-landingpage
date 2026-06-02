@@ -1,0 +1,28 @@
+---
+import { campaign } from "../content";
+const { footer } = campaign.geoscience;
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p>© {year} {footer}</p>
+    <a href="/privacy">Privacy</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--fabriq-lavender-100);
+    color: var(--fabriq-grey);
+    font-size: 0.9rem;
+  }
+  .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>

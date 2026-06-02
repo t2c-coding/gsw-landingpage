@@ -1,0 +1,96 @@
+---
+import { campaign } from "../content";
+const { proof } = campaign.geoscience;
+---
+
+<section class="section proof" id="proof">
+  <div class="container">
+    <h2>{proof.sectionTitle}</h2>
+    <p class="proof__prompt-label">Try asking:</p>
+    <p class="proof__prompt" aria-label="Example prompt">{proof.prompt}</p>
+
+    <div class="proof__story">
+      <p class="proof__lead">{proof.narrativeLead}</p>
+      <blockquote class="proof__quote">
+        <cite>{proof.generalLlm.label}</cite>
+        <p>{proof.generalLlm.quote}</p>
+      </blockquote>
+      <p class="proof__bridge">{proof.bridge}</p>
+      <p class="proof__fabriq-condensed">{proof.fabriqCondensed}</p>
+      <details class="proof__details">
+        <summary>Full Fabriq answer</summary>
+        <p>{proof.fabriqFull}</p>
+      </details>
+    </div>
+    <p class="proof__takeaway">{proof.takeaway}</p>
+  </div>
+</section>
+
+<style>
+  .proof__prompt-label {
+    font-size: 0.9rem;
+    color: var(--fabriq-grey);
+    margin: 1rem 0 0.25rem;
+  }
+  .proof__prompt {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    background: var(--fabriq-lavender-100);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius);
+    margin: 0 0 2rem;
+  }
+  .proof__story {
+    max-width: 52rem;
+  }
+  .proof__lead {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .proof__quote {
+    margin: 0 0 1.25rem;
+    padding: 1.25rem 1.5rem;
+    border-left: 4px solid var(--fabriq-purple-500);
+    background: #f8f6fc;
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .proof__quote cite {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--fabriq-purple-700);
+    margin-bottom: 0.5rem;
+  }
+  .proof__quote p {
+    margin: 0;
+    color: var(--fabriq-purple-700);
+  }
+  .proof__bridge {
+    margin: 0 0 0.75rem;
+    font-weight: 500;
+  }
+  .proof__fabriq-condensed {
+    font-size: 1.05rem;
+    font-weight: 500;
+    background: var(--fabriq-lavender-100);
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--fabriq-lavender-200);
+    margin: 0 0 1rem;
+  }
+  .proof__details {
+    margin-bottom: 1.5rem;
+    color: var(--fabriq-purple-700);
+  }
+  .proof__details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--fabriq-purple-500);
+  }
+  .proof__takeaway {
+    color: var(--fabriq-purple-700);
+    font-size: 1.05rem;
+  }
+</style>

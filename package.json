@@ -1,0 +1,11 @@
+{
+  "name": "fabriq-landing-page",
+  "private": true,
+  "scripts": {
+    "dev:web": "pnpm --filter @fabriq/web dev",
+    "dev:api": "pnpm --filter @fabriq/api dev",
+    "build:web": "pnpm --filter @fabriq/web build",
+    "build:api": "pnpm --filter @fabriq/api build",
+    "build": "pnpm build:web && pnpm build:api"
+  }
+}

@@ -1,0 +1,37 @@
+---
+import { campaign } from "../content";
+import "../styles/global.css";
+
+const { geoscience } = campaign;
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = geoscience.seo.title, description = geoscience.seo.description } =
+  Astro.props;
+const apiUrl = import.meta.env.PUBLIC_API_URL ?? "";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body data-campaign="geoscience" data-api-url={apiUrl}>
+    <slot />
+  </body>
+</html>

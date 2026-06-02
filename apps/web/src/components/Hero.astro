@@ -1,0 +1,59 @@
+---
+import { campaign } from "../content";
+const { hero } = campaign.geoscience;
+---
+
+<section class="section hero">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">explainable ai</p>
+      <h1>{hero.title}</h1>
+      <p class="hero__sub">{hero.subtitle}</p>
+      <a href="#contact" class="btn">{hero.cta}</a>
+    </div>
+    <div class="hero__visual">
+      <img
+        src="/brand/fabriq-grafikk.png"
+        alt=""
+        width="480"
+        height="420"
+        loading="eager"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: 3rem;
+  }
+  .hero__grid {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .hero__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .hero__eyebrow {
+    font-size: 0.85rem;
+    text-transform: lowercase;
+    color: var(--fabriq-purple-500);
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+  .hero__sub {
+    color: var(--fabriq-purple-700);
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero__visual img {
+    display: block;
+    margin-inline: auto;
+  }
+</style>

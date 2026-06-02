@@ -1,0 +1,39 @@
+---
+import { campaign } from "../content";
+const { hero } = campaign.geoscience;
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="header__logo">Fabriq</a>
+    <a href="#contact" class="btn header__cta">{hero.cta}</a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--fabriq-lavender-100);
+  }
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+  }
+  .header__logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--fabriq-purple-900);
+    text-decoration: none;
+  }
+  .header__cta {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+</style>

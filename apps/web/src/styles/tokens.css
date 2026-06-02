@@ -1,0 +1,14 @@
+:root {
+  --fabriq-purple-900: #201240;
+  --fabriq-purple-700: #38266d;
+  --fabriq-purple-500: #704cd9;
+  --fabriq-purple-600: #5919c1;
+  --fabriq-lavender-100: #e2dbf7;
+  --fabriq-lavender-200: #a994e8;
+  --fabriq-white: #ffffff;
+  --fabriq-grey: #7e7973;
+  --font-heading: "Poppins", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(32, 18, 64, 0.08);
+}

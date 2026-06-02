@@ -1,0 +1,36 @@
+---
+import { campaign } from "../content";
+const { value } = campaign.geoscience;
+---
+
+<section class="section section--lavender">
+  <div class="container">
+    <h2>{value.title}</h2>
+    <ul class="value-list">
+      {value.bullets.map((b) => (
+        <li>{b}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .value-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .value-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .value-list li {
+    background: var(--fabriq-white);
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+</style>
