@@ -30,10 +30,9 @@ export const campaign = {
     why: {
       title: "Why Fabriq",
       bullets: [
-        "Subject-matter experts stay in control of AI reasoning - no developer bottleneck",
-        "Every answer shows its sources; full provenance for compliance and trust",
-        "Model-agnostic - stay on the cutting edge without vendor lock-in",
-        "Intelligence woven into existing tools at the edge of the workflow",
+        "Trusted Intelligence; AI agents with full provenance",
+        "Proven technology at scale",
+        "Team of AI experts with experience in geoscience",
       ],
     },
     cta: {
