@@ -29,7 +29,7 @@ is_cloudflare_proxy_ip() {
   return 1
 }
 
-# Fail fast when DOMAIN is proxied and DNS-01 token is not configured.
+# Advisory only — do not block redeploys when Cloudflare proxy is intentional and TLS already works.
 check_acme_dns() {
   local domain="$1"
   if [ -n "${CLOUDFLARE_API_TOKEN:-}" ]; then
@@ -37,25 +37,27 @@ check_acme_dns() {
   fi
 
   if ! command -v dig >/dev/null 2>&1; then
-    log "Warning: dig not installed; skipping DNS preflight (install dnsutils)"
     return 0
   fi
 
   local ip
+  local proxied=false
   while read -r ip; do
     [ -z "$ip" ] && continue
     if is_cloudflare_proxy_ip "$ip"; then
-      log "ERROR: ${domain} resolves to Cloudflare proxy (${ip})"
-      log "Let's Encrypt cannot complete HTTP/TLS challenges on your VM."
-      log ""
-      log "Fix (pick one):"
-      log "  1. Cloudflare DNS → disable proxy (grey cloud) for ${domain}, wait ~2 min, redeploy"
-      log "  2. Set CLOUDFLARE_API_TOKEN in .env (Zone.DNS Edit) for DNS-01 ACME — proxy can stay on"
-      log ""
-      log "See README.md → TLS / Cloudflare troubleshooting"
-      return 1
+      proxied=true
+      log "Note: ${domain} resolves via Cloudflare proxy (${ip})"
     fi
   done < <(dig +short A "$domain" AAAA "$domain" 2>/dev/null)
+
+  if [ "$proxied" = true ]; then
+    log "Redeploy will continue. HTTP-01 ACME only fails if Caddy must issue a *new* cert and cannot reach your VM."
+    log "If TLS breaks after a fresh install, use grey-cloud DNS or set CLOUDFLARE_API_TOKEN (see README)."
+    if [ "${STRICT_ACME_DNS_CHECK:-}" = "1" ]; then
+      log "STRICT_ACME_DNS_CHECK=1 — aborting (unset to allow deploy behind Cloudflare)."
+      return 1
+    fi
+  fi
 
   return 0
 }

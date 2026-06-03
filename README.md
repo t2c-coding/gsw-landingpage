@@ -90,7 +90,9 @@ chmod +x scripts/deploy.sh scripts/export-leads.sh
 
 Exit code **0** = delivery verified (HTTPS, health, test lead, page markers).
 
-Flags: `--verify-only`, `--skip-build`, `--skip-lead-test`, `--skip-dns-check`
+Flags: `--verify-only`, `--skip-build`, `--skip-lead-test`, `--skip-dns-check` (skip Cloudflare DNS notes)
+
+Set `STRICT_ACME_DNS_CHECK=1` only if you want the script to **abort** when the domain is behind Cloudflare without `CLOUDFLARE_API_TOKEN` (first-time TLS debugging).
 
 ### Updating a running production stack
 
@@ -162,7 +164,7 @@ Do not commit `.env` to git; keep production secrets only on the VM.
 
 ### TLS / Cloudflare troubleshooting
 
-If Caddy logs show ACME **404** on `/.well-known/acme-challenge/` and an IP like `2606:4700:…`, **Let's Encrypt is hitting Cloudflare**, not your VM. Caddy on the server never receives the challenge.
+If Caddy logs show ACME **404** on `/.well-known/acme-challenge/` and an IP like `2606:4700:…`, **Let's Encrypt is hitting Cloudflare**, not your VM. That matters on **first certificate issuance**; routine redeploys behind an already-working proxy are fine and `deploy.sh` will not block on Cloudflare DNS.
 
 **Fix A — DNS only (simplest):** In Cloudflare, set the `DOMAIN` record to **DNS only** (grey cloud). Point A/AAAA to your VM. Wait a few minutes, then:
 
