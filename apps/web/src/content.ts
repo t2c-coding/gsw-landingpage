@@ -8,7 +8,7 @@ export const campaign = {
     hero: {
       title: "Expert AI agents that understand geoscience",
       subtitle:
-        "Geologic interpretation, regulatory boundaries, and geographic context in one explainable workflow.",
+        "Geographic context and regulatory understanding in one explainable workflow.",
       cta: "Sign up for an exploratory call",
     },
     proof: {
