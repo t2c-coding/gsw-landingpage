@@ -14,10 +14,7 @@ services:
     # No host ports — reachable only as http://api:3000 from Caddy on fabriq network
 
   caddy:
-    build:
-      context: .
-      dockerfile: Dockerfile.caddy
-    image: fabriq-caddy:2
+    image: caddy:2-alpine
     restart: unless-stopped
     ports:
       - "80:80"

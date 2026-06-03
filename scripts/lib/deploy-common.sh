@@ -62,6 +62,17 @@ check_acme_dns() {
   return 0
 }
 
+# Sets PROD_COMPOSE_FILES array: base compose + optional Cloudflare override.
+prod_compose_files() {
+  local root="$1"
+  PROD_COMPOSE_FILES=(
+    -f "${root}/docker/docker-compose.yml"
+  )
+  if [ -n "${CLOUDFLARE_API_TOKEN:-}" ]; then
+    PROD_COMPOSE_FILES+=(-f "${root}/docker/docker-compose.cloudflare.yml")
+  fi
+}
+
 # Build Astro static site without host Node/npm (dist → apps/web/dist).
 build_web_dist() {
   local root="$1"

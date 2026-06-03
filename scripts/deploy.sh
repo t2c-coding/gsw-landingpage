@@ -54,13 +54,20 @@ if [ "$VERIFY_ONLY" = false ]; then
     log "Building web (PUBLIC_API_URL=$PUBLIC_API_URL)…"
     build_web_dist "$ROOT" "$PUBLIC_API_URL"
 
-    log "Building API + Caddy images…"
-    docker compose -f docker/docker-compose.yml build
+    prod_compose_files "$ROOT"
+    if [ -n "${CLOUDFLARE_API_TOKEN:-}" ]; then
+      log "Building API + custom Caddy (Cloudflare DNS-01; needs ~2GB RAM during compile)…"
+      docker compose "${PROD_COMPOSE_FILES[@]}" build
+    else
+      log "Building API image (Caddy uses stock caddy:2-alpine, no compile)…"
+      docker compose "${PROD_COMPOSE_FILES[@]}" build api
+    fi
   fi
 
   log "Starting stack (api + caddy)…"
   export DOMAIN ACME_EMAIL CADDYFILE
-  docker compose -f docker/docker-compose.yml --env-file .env up -d
+  prod_compose_files "$ROOT"
+  docker compose "${PROD_COMPOSE_FILES[@]}" --env-file .env up -d
 fi
 
 log "Waiting for TLS + health (up to ~120s)…"

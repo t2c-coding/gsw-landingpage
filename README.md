@@ -118,7 +118,7 @@ What `deploy.sh` does on each run:
 | Step | Effect |
 |------|--------|
 | Web build | Docker `node:20-alpine` runs `npm ci && npm run build` → `apps/web/dist` (uses `PUBLIC_API_URL=https://${DOMAIN}/api`) |
-| `docker compose build` | Rebuilds `api` and `caddy` images when Dockerfiles or dependencies changed |
+| `docker compose build` | Rebuilds `api` only (stock `caddy:2-alpine` — no compile). Custom Caddy build runs only if `CLOUDFLARE_API_TOKEN` is set |
 | `docker compose up -d` | Restarts stack; Caddy serves new static files from the mounted `dist` volume |
 | Verification | `curl` health, homepage, optional test lead POST, page markers |
 
@@ -145,7 +145,7 @@ docker run --rm -v "$(pwd)/apps/web:/app" -w /app \
   -e "PUBLIC_API_URL=${PUBLIC_API_URL}" node:20-alpine \
   sh -c "npm ci && npm run build"
 
-docker compose -f docker/docker-compose.yml --env-file .env build
+docker compose -f docker/docker-compose.yml --env-file .env build api
 docker compose -f docker/docker-compose.yml --env-file .env up -d
 ```
 
@@ -183,6 +183,14 @@ CLOUDFLARE_API_TOKEN=your_token
 Redeploy; `deploy.sh` switches to **DNS-01** ACME via `docker/Caddyfile.cloudflare`.
 
 **Cloudflare SSL mode** (when using proxy): set SSL/TLS to **Full (strict)** once the origin has a valid cert.
+
+### Caddy build killed (`signal: killed`)
+
+Compiling Caddy with the Cloudflare plugin (`xcaddy`) needs **~2GB RAM**. On a 1GB VM the build is killed by the OOM killer.
+
+**Default deploys** use the pre-built **`caddy:2-alpine`** image (no compile). A custom Caddy image is built only when `CLOUDFLARE_API_TOKEN` is set in `.env`.
+
+If you need DNS-01 on a small VM, build once on a larger machine and push `fabriq-caddy:2`, or temporarily add swap, or use grey-cloud DNS and leave `CLOUDFLARE_API_TOKEN` unset.
 
 ## Env vars
 
