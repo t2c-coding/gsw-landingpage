@@ -1,0 +1,8 @@
+# Optional override: compile Caddy with Cloudflare DNS-01 (needs ~2GB RAM during build).
+# Used only when CLOUDFLARE_API_TOKEN is set in .env — see scripts/deploy.sh
+services:
+  caddy:
+    build:
+      context: .
+      dockerfile: Dockerfile.caddy
+    image: fabriq-caddy:2
