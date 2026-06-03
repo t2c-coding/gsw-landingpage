@@ -92,6 +92,74 @@ Exit code **0** = delivery verified (HTTPS, health, test lead, page markers).
 
 Flags: `--verify-only`, `--skip-build`, `--skip-lead-test`, `--skip-dns-check`
 
+### Updating a running production stack
+
+When new code is merged, update the VM from the **repo root** (same directory as `.env`). You only need **Docker** and **git** on the host — not Node/npm.
+
+**1. Pull the latest code**
+
+```bash
+cd /path/to/fabriq-landing-page   # your clone on the VM
+git pull
+```
+
+**2. Redeploy (recommended)**
+
+This rebuilds the Astro site into `apps/web/dist`, rebuilds the API and Caddy images if needed, recreates containers, and runs HTTPS/health/lead checks:
+
+```bash
+./scripts/deploy.sh
+```
+
+What `deploy.sh` does on each run:
+
+| Step | Effect |
+|------|--------|
+| Web build | Docker `node:20-alpine` runs `npm ci && npm run build` → `apps/web/dist` (uses `PUBLIC_API_URL=https://${DOMAIN}/api`) |
+| `docker compose build` | Rebuilds `api` and `caddy` images when Dockerfiles or dependencies changed |
+| `docker compose up -d` | Restarts stack; Caddy serves new static files from the mounted `dist` volume |
+| Verification | `curl` health, homepage, optional test lead POST, page markers |
+
+Expect a few seconds of downtime while containers restart. TLS certificates in the `caddy_data` volume are kept across deploys.
+
+**3. Faster options (when appropriate)**
+
+| Change type | Command |
+|-------------|---------|
+| Copy / content / Astro only | `./scripts/deploy.sh` (web rebuild is quick; API image may cache) |
+| `.env` only (no code) | `docker compose -f docker/docker-compose.yml --env-file .env up -d` |
+| Smoke test after manual steps | `./scripts/deploy.sh --skip-build` |
+| Skip test lead POST | `./scripts/deploy.sh --skip-lead-test` |
+
+**4. Manual update (equivalent to deploy without verification)**
+
+```bash
+set -a && source .env && set +a
+export PUBLIC_API_URL="https://${DOMAIN}/api"
+export CADDYFILE="${PWD}/docker/Caddyfile"   # or Caddyfile.cloudflare if using CLOUDFLARE_API_TOKEN
+
+# Build static site (no host npm)
+docker run --rm -v "$(pwd)/apps/web:/app" -w /app \
+  -e "PUBLIC_API_URL=${PUBLIC_API_URL}" node:20-alpine \
+  sh -c "npm ci && npm run build"
+
+docker compose -f docker/docker-compose.yml --env-file .env build
+docker compose -f docker/docker-compose.yml --env-file .env up -d
+```
+
+**5. Check logs if something fails**
+
+```bash
+docker compose -f docker/docker-compose.yml logs -f caddy
+docker compose -f docker/docker-compose.yml logs -f api
+```
+
+**6. Roll back**
+
+Check out the previous git revision on the VM, then run `./scripts/deploy.sh` again. Old images may remain cached; `docker compose build` picks up the checked-out code.
+
+Do not commit `.env` to git; keep production secrets only on the VM.
+
 ### TLS / Cloudflare troubleshooting
 
 If Caddy logs show ACME **404** on `/.well-known/acme-challenge/` and an IP like `2606:4700:…`, **Let's Encrypt is hitting Cloudflare**, not your VM. Caddy on the server never receives the challenge.
