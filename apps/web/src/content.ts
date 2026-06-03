@@ -6,7 +6,7 @@ export const campaign = {
         "Domain-grounded geologic reasoning with regulatory and map context - not generic chat.",
     },
     hero: {
-      title: "Expert AI agent that understands geoscience",
+      title: "Expert AI agents that understand geoscience",
       subtitle:
         "Geologic interpretation, regulatory boundaries, and geographic context in one explainable workflow.",
       cta: "Sign up for an exploratory call",
